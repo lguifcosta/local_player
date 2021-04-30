@@ -12,6 +12,6 @@ Any video you put in the mv folder will play on browser
 
 Open your browser,
 the player will be avaliable in :
-localhost:3000/mv 
+localhost:3000/
 or you can replace "localhost" to your ip addres
 
