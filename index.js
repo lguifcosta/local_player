@@ -1,13 +1,13 @@
 const fs = require('fs');
 const express = require('express');
 const app = express();
-app.get('/', (req, res) => {
+app.get('/mv', (req, res) => {
   fs.readFile('./index.html', (err, html) => res.end(html));
 });
-app.get('/mv', (req, res) => {
- 
+app.get('/', (req, res) => { 
  fs.readdirSync('./mv').forEach(file => {
   const mvFile = `./mv/${file}`;
+  console.log(mvFile)
   fs.stat(mvFile, (err, stats) => {
     if (err) {
       console.log(err);
@@ -35,4 +35,4 @@ app.get('/mv', (req, res) => {
   });
 })
 });
-app.listen(3000, () => console.log('VideoFlix Server!'));
+app.listen(3000, () => console.log('localPlayer is ON!!'));
