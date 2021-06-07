@@ -1,13 +1,26 @@
 const fs = require('fs');
+const exec = require('child_process').exec; 
 const express = require('express');
 const app = express();
+
+
+exec('konsole -e "./ngrok http 3000"',
+(error, stdout, stderr)=> {
+   console.log('stdout: ' + stdout);
+   console.log('stderr: ' + stderr);
+   if (error !== null) {
+        console.log('exec error: ' + error);
+   }
+});
+
 app.get('/mv', (req, res) => {
   fs.readFile('./index.html', (err, html) => res.end(html));
-});
+  });
+
 app.get('/', (req, res) => { 
  fs.readdirSync('./mv').forEach(file => {
   const mvFile = `./mv/${file}`;
-  console.log(mvFile)
+
   fs.stat(mvFile, (err, stats) => {
     if (err) {
       console.log(err);
@@ -26,7 +39,6 @@ app.get('/', (req, res) => {
       'Content-Length': chunkSize,
       'Content-Type': 'video/mp4'
     });
-    
     res.status(206);
     
     const stream = fs.createReadStream(mvFile, { start, end });
@@ -36,3 +48,4 @@ app.get('/', (req, res) => {
 })
 });
 app.listen(3000, () => console.log('localPlayer is ON!!'));
+
